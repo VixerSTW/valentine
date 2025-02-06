@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day</title>
+    <style>
+        body {
+            background-color: #ffccd5;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Heart shape */
+        .heart {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-color: #FC7FB6;
+            transform: rotate(-45deg);
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6); /* Glowing effect */
+            transition: all 0.3s ease-in-out;
+        }
+
+        .heart:before, .heart:after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #FC7FB6;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -50px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 50px;
+            top: 0;
+        }
+
+        /* Glow effect on hover */
+        .heart:hover {
+            transform: scale(1.1) rotate(-45deg);
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.9); /* Stronger glow */
+        }
+
+        @keyframes clickEffect {
+            0% { transform: scale(1) rotate(-45deg); }
+            50% { transform: scale(1.2) rotate(-45deg); box-shadow: 0 0 30px rgba(255, 0, 0, 1); }
+            100% { transform: scale(1) rotate(-45deg); }
+        }
+
+        .heart.clicked {
+            animation: clickEffect 0.4s ease-out;
+        }
+
+        .message {
+            font-size: 24px;
+            color: #d63384;
+            font-weight: bold;
+            margin-top: 20px;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: 0;
+            width: 20px;
+            height: 20px;
+            background-color: #FC7FB6;
+            transform: rotate(-45deg);
+            opacity: 0.7;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); /* Small glow */
+            animation: floatUp 5s linear;
+        }
+
+        .floating-heart:before, .floating-heart:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #FC7FB6;
+            border-radius: 50%;
+        }
+
+        .floating-heart:before {
+            top: -10px;
+            left: 0;
+        }
+
+        .floating-heart:after {
+            left: 10px;
+            top: 0;
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(0) rotate(-45deg); opacity: 0.7; }
+            to { transform: translateY(-100vh) rotate(-45deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart" onclick="spawnHearts(); addClickEffect(this)"></div>
+    <div class="message">Happy Valentine's Day #####!</div>
+    
+    <script>
+        function createHeart() {
+            let heart = document.createElement("div");
+            heart.classList.add("floating-heart");
+            document.body.appendChild(heart);
+
+            heart.style.left = Math.random() * 100 + "vw";  // Random horizontal position
+            heart.style.bottom = Math.random() * 50 + "vh"; // Start from random height (NEW)
+            heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        function spawnHearts() {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+        }
+
+        function addClickEffect(heartElement) {
+            heartElement.classList.add('clicked');
+            setTimeout(() => heartElement.classList.remove('clicked'), 400);
+        }
+
+        // Looping hearts continuously
+        setInterval(createHeart, 700);
+    </script>
+</body>
+</html>
